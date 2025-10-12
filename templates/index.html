@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Wine Data Entry - Styled</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>กรอกข้อมูลไวน์แบบสวย</h1>
+  <form method="post">
+    <div class="table-wrapper">
+      <table id="data-table">
+        <thead>
+          <tr>
+            {% for col in columns %}
+              <th>{{ col }}</th>
+            {% endfor %}
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% for col in columns %}
+              <td><input type="text" name="{{ col }}" placeholder="{{ col }}"></td>
+            {% endfor %}
+            <td><button type="button" class="remove-btn" onclick="removeRow(this)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="add-btn" onclick="addRow()">Add Row</button>
+    <button type="submit" class="submit-btn">ดาวน์โหลด Excel</button>
+  </form>
+
+  <div class="tutorials">
+    <a href="{{ url_for('tutorial') }}"><button>Tutorial Descriptive Stats</button></a>
+    <a href="{{ url_for('tutorial') }}"><button>Tutorial Correlation</button></a>
+    <a href="{{ url_for('tutorial') }}"><button>Tutorial Regression</button></a>
+  </div>
+
+  <script>
+    const jsColumns = {{ columns|tojson | safe }};
+
+    function addRow(){
+      const tableBody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+      const row = tableBody.insertRow();
+      for (let i=0; i<jsColumns.length; i++){
+        const cell = row.insertCell();
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = jsColumns[i];
+        input.placeholder = jsColumns[i];
+        cell.appendChild(input);
+      }
+      const cellAction = row.insertCell();
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.innerText = 'Remove';
+      btn.className = 'remove-btn';
+      btn.onclick = function(){ removeRow(btn); };
+      cellAction.appendChild(btn);
+    }
+
+    function removeRow(btn){
+      const row = btn.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+  </script>
+</body>
+</html>
