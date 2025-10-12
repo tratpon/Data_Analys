@@ -31,8 +31,17 @@ def index():
 
     return render_template("index.html", columns=COLUMNS)
 
-@app.route("/tutorial")
-def tutorial():
-    return render_template("tutorial.html", columns=COLUMNS)
+@app.route("/Descriptive")
+def Descriptive():
+    return render_template("Descriptive.html", columns=COLUMNS)
+
+@app.route("/Correlation")
+def Correlation():
+    return render_template("Correlation.html", columns=COLUMNS)
+
+@app.route("/Regression")
+def Regression():
+    return render_template("Regression.html", columns=COLUMNS)
+
 if __name__ == "__main__":
     app.run(debug=True)

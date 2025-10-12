@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>กรอกข้อมูลไวน์แบบสวย</h1>
+  <h1>Wine Data</h1>
   <form method="post">
     <div class="table-wrapper">
       <table id="data-table">
@@ -33,9 +33,9 @@
   </form>
 
   <div class="tutorials">
-    <a href="{{ url_for('tutorial') }}"><button>Tutorial Descriptive Stats</button></a>
-    <a href="{{ url_for('tutorial') }}"><button>Tutorial Correlation</button></a>
-    <a href="{{ url_for('tutorial') }}"><button>Tutorial Regression</button></a>
+    <a href="{{ url_for('Descriptive') }}"><button>Tutorial Descriptive Stats</button></a>
+    <a href="{{ url_for('Correlation') }}"><button>Tutorial Correlation</button></a>
+    <a href="{{ url_for('Regression') }}"><button>Tutorial Regression</button></a>
   </div>
 
   <script>
