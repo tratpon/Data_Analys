@@ -29,6 +29,7 @@
       </table>
     </div>
     <button type="button" class="add-btn" onclick="addRow()">Add Row</button>
+    <input type="text" id="filename" name="filename" placeholder="ชื่อไฟล์ (ไม่ต้องใส่ .xlsx)">
     <button type="submit" class="submit-btn">ดาวน์โหลด Excel</button>
   </form>
 
@@ -36,6 +37,7 @@
     <a href="{{ url_for('Descriptive') }}"><button>Tutorial Descriptive Stats</button></a>
     <a href="{{ url_for('Correlation') }}"><button>Tutorial Correlation</button></a>
     <a href="{{ url_for('Regression') }}"><button>Tutorial Regression</button></a>
+    <a href="{{ url_for('powerbi_avg') }}"><button>Powerbi-Avg</button></a>
   </div>
 
   <script>

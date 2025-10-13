@@ -1,11 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Upload Wine Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>คู่มือ: การหาค่าสหสัมพันธ์ (Correlation) ด้วย Excel Analysis ToolPak</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Correlation</h1>
-    
+    <div class="container">
+                <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+                    <h1 style="margin:0">คู่มือการใช้ Excel Analysis ToolPak: Correlation</h1>
+                    <a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a>
+                </div>
+    <p class="tutorial-subtitle">หน้านี้อธิบายเป็นภาษาไทยทีละขั้นตอนว่าจะใช้ฟีเจอร์ <strong>Correlation</strong> ใน <em>Excel Analysis ToolPak</em> เพื่อวิเคราะห์ความสัมพันธ์ระหว่างตัวแปร (เช่น ตัวแปรทางเคมีของไวน์) โดยใช้ไฟล์ที่ได้จากปุ่มดาวน์โหลดของแอป (`uploads/wine_input.xlsx`).</p>
+
+    <h2 class="section-heading">1) สรุปสั้น ๆ — เมื่อใช้วิธีนี้</h2>
+        <ul>
+            <li>Correlation (ค่าสหสัมพันธ์) วัดความสัมพันธ์เชิงเส้นระหว่างสองตัวแปร (ค่าอยู่ระหว่าง -1 ถึง 1)</li>
+            <li>ค่าใกล้ 1: ความสัมพันธ์เชิงบวกระหว่างตัวแปร (ทั้งคู่เพิ่ม/ลดพร้อมกัน)</li>
+            <li>ค่าใกล้ -1: ความสัมพันธ์เชิงลบ (ตัวแปรหนึ่งเพิ่ม อีกตัวลด)</li>
+            <li>ค่าใกล้ 0: ไม่มีความสัมพันธ์เชิงเส้นชัดเจน</li>
+        </ul>
+
+    <h2 class="section-heading">2) เตรียมไฟล์ Excel</h2>
+        <ol>
+            <li>จากหน้า index ของแอป ให้กรอกแถวข้อมูลหลาย ๆ แถว แล้วกด <strong>ดาวน์โหลด Excel</strong> เพื่อได้ไฟล์ `wine_input.xlsx`</li>
+            <li>เปิดไฟล์ `wine_input.xlsx` ใน Microsoft Excel (หรือ LibreOffice Calc/Google Sheets — แต่ ToolPak เป็นของ Excel บน Windows/Mac)</li>
+            <li>ตรวจสอบคอลัมน์ชื่อที่ชัดเจน (เช่น `fixed acidity`, `volatile acidity`, `alcohol`, `quality` ฯลฯ) และให้แน่ใจว่าแต่ละคอลัมน์เป็นค่าตัวเลข</li>
+        </ol>
+
+    <h2 class="section-heading">3) เปิดใช้งาน Analysis ToolPak (ถ้ายังไม่ได้เปิด)</h2>
+        <p>(ตัวอย่างสำหรับ Excel บน Windows)</p>
+        <ol>
+            <li>ไปที่ <strong>File &gt; Options &gt; Add-ins</strong></li>
+            <li>ที่ด้านล่างของหน้าต่าง ให้เลือก <strong>Excel Add-ins</strong> แล้วกด <strong>Go...</strong></li>
+            <li>ติ๊กถูกที่ <strong>Analysis ToolPak</strong> แล้วกด <strong>OK</strong></li>
+            <li>หลังจากเปิดแล้ว เมนู <strong>Data &gt; Data Analysis</strong> ควรปรากฏที่มุมขวาของแถบ Data</li>
+        </ol>
+
+    <h2 class="section-heading">4) รัน Correlation (ขั้นตอนจริง)</h2>
+        <ol>
+            <li>เลือกแท็บ <strong>Data</strong> &gt; คลิก <strong>Data Analysis</strong></li>
+            <li>ในหน้าต่าง Data Analysis เลือก <strong>Correlation</strong> แล้วคลิก <strong>OK</strong></li>
+            <li>
+                ในกล่องตัวเลือก:<br>
+                - <strong>Input Range:</strong> ระบุช่วงที่มีข้อมูลตัวแปรเป็นคอลัมน์ (ตัวอย่าง: <code>A1:L51</code> ถ้าคุณมีหัวคอลัมน์ที่แถว 1 และ 50 แถวข้อมูล)
+                <br>- ติ๊ก <strong>Labels in first row</strong> ถ้าช่วงรวมชื่อคอลัมน์
+                <br>- <strong>Grouped By:</strong> เลือก <em>Columns</em> (ข้อมูลแต่ละตัวแปรเป็นคอลัมน์)
+            </li>
+            <li>เลือก <strong>Output Range</strong> เพื่อระบุตำแหน่งผลลัพธ์ (หรือเลือก New Worksheet/Workbook)</li>
+            <li>กด <strong>OK</strong> — Excel จะสร้างตารางสหสัมพันธ์ (correlation matrix)</li>
+        </ol>
+
+    <h2 class="section-heading">5) การอ่านผลลัพธ์</h2>
+        <p>ผลลัพธ์จะเป็นตาราง NxN (N = จำนวนตัวแปร) โดยแถวและคอลัมน์เป็นตัวแปรเดียวกัน ค่าในตารางคือค่าสหสัมพันธ์แบบ Pearson</p>
+        <ul>
+            <li>แถว/คอลัมน์ ที่ค่าตัวเอง = 1 (ตัวแปรเทียบกับตัวเอง)</li>
+            <li>ค่า > 0.7 หรือ < -0.7 แสดงความสัมพันธ์ที่ค่อนข้างแข็งแรง (ขึ้นอยู่กับบริบท)</li>
+            <li>ค่าประมาณ 0 แปลว่าไม่มีความสัมพันธ์เชิงเส้น แต่อาจมีความสัมพันธ์เชิงไม่เชิงเส้นได้</li>
+        </ul>
+
+    <h2 class="section-heading">6) ตัวอย่างสั้น ๆ (ใช้ไฟล์จากแอป)</h2>
+        <p>สมมติคุณดาวน์โหลด `wine_input.xlsx` จากหน้าแอป แล้วเปิดไฟล์ใน Excel</p>
+        <ol>
+            <li>เลือกช่วงรวมคอลัมน์ทั้งหมดที่ต้องการวิเคราะห์ (รวมหัวคอลัมน์ เช่น <code>A1:L51</code>)</li>
+            <li>รัน Data Analysis &gt; Correlation ตามขั้นตอนข้างต้น</li>
+            <li>ดูตารางนอก: หากคอลัมน์ <code>alcohol</code> กับ <code>quality</code> มีค่า 0.45 หมายความว่ามีความสัมพันธ์เชิงบวกปานกลาง</li>
+        </ol>
+
+    <h2 class="section-heading">7) เคล็ดลับ & ข้อควรระวัง</h2>
+        <ul>
+            <li>ToolPak ให้ค่า Pearson correlation เท่านั้น — ระวัง outlier และ non-linear relationships</li>
+            <li>ถ้ามีคอลัมน์ที่เป็นข้อความหรือมีค่าว่างมาก ควรล้างข้อมูลก่อน (convert to numeric / remove blanks)</li>
+            <li>จำนวนตัวอย่างน้อย ๆ อาจทำให้ค่าไม่เสถียร — ควรมีตัวอย่างมากพอ (เช่น > 30 แถว โดยประมาณ)</li>
+            <li>ถ้าต้องการทดสอบนัยสำคัญทางสถิติ (p-value) ให้ใช้ add-in หรือฟังก์ชันอื่น ๆ — ToolPak correlation ไม่แสดง p-values โดยตรง</li>
+        </ul>
+
+    <h2 class="section-heading">8) ถัดไป</h2>
+        <p>หลังจากได้ matrix แล้ว คุณอาจจะ:</p>
+        <ul>
+            <li>ใช้ conditional formatting ใน Excel เพื่อเน้นค่าเชิงสูง/ต่ำ</li>
+            <li>ส่งออก matrix เป็นภาพหรือคัดลอกไปยังรายงาน</li>
+            <li>นำ matrix ไปเป็น input ในการทำ feature selection หรือตรวจสอบ multicollinearity ก่อนทำ regression</li>
+        </ul>
+
+        <p>ถ้าต้องการ ผม/เรา (ทีม) สามารถเพิ่มตัวอย่างไฟล์ตัวอย่างใน `uploads/` หรือเพิ่มสคริปต์ Python เพื่อคำนวณ correlation พร้อม p-values และ visualization — บอกผมว่าต้องการแบบไหน</p>
+    </div>
 </body>
 </html>

@@ -6,6 +6,9 @@ app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+
+IMAGE_FOLDER = 'static/images'
+
 COLUMNS = [
     "fixed acidity","volatile acidity","citric acid","residual sugar","chlorides",
     "free sulfur dioxide","total sulfur dioxide","density","pH","sulphates","alcohol","quality"
@@ -25,7 +28,10 @@ def index():
         for col in COLUMNS:
             df[col] = pd.to_numeric(df[col], errors='ignore')
 
-        out_path = os.path.join(UPLOAD_FOLDER, "wine_input.xlsx")
+        # รับชื่อไฟล์จากผู้ใช้
+        filename = request.form.get("filename", "wine_input")
+        out_path = os.path.join(UPLOAD_FOLDER, f"{filename}.xlsx")
+
         df.to_excel(out_path, index=False)
         return send_file(out_path, as_attachment=True)
 
@@ -42,6 +48,12 @@ def Correlation():
 @app.route("/Regression")
 def Regression():
     return render_template("Regression.html", columns=COLUMNS)
+
+@app.route("/powerbi_avg")
+def powerbi_avg():
+    images = [f for f in os.listdir(IMAGE_FOLDER)
+              if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
+    return render_template('powerbi_avg.html', images=images)
 
 if __name__ == "__main__":
     app.run(debug=True)

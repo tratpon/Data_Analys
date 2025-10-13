@@ -1,11 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Upload Wine Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>คู่มือ: Descriptive Statistics ด้วย Excel Analysis ToolPak</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Descriptive</h1>
-    
+    <div class="container">
+            <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+                <h1 style="margin:0">คู่มือการใช้ Excel Analysis ToolPak: Descriptive Statistics</h1>
+                <a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a>
+            </div>
+    <p class="tutorial-subtitle">หน้านี้อธิบายเป็นภาษาไทยขั้นตอนการใช้ฟีเจอร์ <strong>Descriptive Statistics</strong> ใน <em>Excel Analysis ToolPak</em> เพื่อสรุปสถิติพื้นฐาน (เช่น ค่าเฉลี่ย ส่วนเบี่ยงเบนมาตรฐาน ค่าต่ำสุด-สูงสุด ฯลฯ) โดยใช้ไฟล์ที่ได้จากแอป (`uploads/wine_input.xlsx`).</p>
+
+        <h2>1) สรุปสั้น ๆ</h2>
+        <ul>
+            <li>Descriptive Statistics ให้สรุปตัวเลขสำคัญสำหรับแต่ละคอลัมน์ตัวแปร เช่น Mean, Median, Std. Dev, Min, Max, Count ฯลฯ</li>
+            <li>ใช้เมื่ออยากเข้าใจการกระจายของข้อมูลและตรวจสอบคุณภาพข้อมูลเบื้องต้น</li>
+            <li>ดู “ลักษณะทั่วไป” ของแต่ละตัวแปร เช่น ค่าเฉลี่ย ความเบี่ยงเบน การกระจาย</li>
+        </ul>
+
+        <h2>2) เตรียมไฟล์ Excel</h2>
+        <ol>
+            <li>ดาวน์โหลด `wine_input.xlsx` จากหน้า index ของแอป โดยกรอกข้อมูลแล้วคลิก <strong>ดาวน์โหลด Excel</strong></li>
+            <li>เปิดไฟล์ใน Microsoft Excel และตรวจสอบว่าช่วงข้อมูลมีหัวคอลัมน์ และค่าทั้งหมดยังเป็นตัวเลข (หรือแปลงเป็นตัวเลขก่อน)</li>
+        </ol>
+
+        <h2>3) เปิดใช้งาน Analysis ToolPak (ถ้ายังไม่ได้เปิด)</h2>
+        <p>ดูคำอธิบายในหน้า Correlation ถ้าคุณไม่แน่ใจวิธีเปิด</p>
+
+        <h2>4) รัน Descriptive Statistics (ขั้นตอน)</h2>
+        <ol>
+            <li>ไปที่ <strong>Data</strong> &gt; <strong>Data Analysis</strong></li>
+            <li>เลือก <strong>Descriptive Statistics</strong> และกด <strong>OK</strong></li>
+            <li>กำหนดค่าดังนี้:
+                <ul>
+                    <li><strong>Input Range:</strong> ช่วงข้อมูลรวมหัวคอลัมน์ (ตัวอย่าง: <code>A1:L51</code>)</li>
+                    <li>ติ๊ก <strong>Labels in first row</strong> ถ้าช่วงรวมหัวคอลัมน์</li>
+                    <li>เลือก <strong>Grouped By: Columns</strong> (ข้อมูลแต่ละตัวแปรอยู่ในคอลัมน์)</li>
+                    <li>เลือก <strong>Output Range</strong> (หรือ New Worksheet/Workbook)</li>
+                    <li>ติ๊ก <strong>Summary statistics</strong> (ปกติจะติ๊กอันนี้เพื่อให้ได้ค่า Mean, StdDev, Median, Mode, Min, Max, Range, Count, ฯลฯ)</li>
+                </ul>
+            </li>
+            <li>กด <strong>OK</strong> — Excel จะสร้างตารางสรุปสำหรับแต่ละคอลัมน์</li>
+        </ol>
+
+        <h2>5) สิ่งที่ได้ (ตัวอย่างค่าพื้นฐาน)</h2>
+        <table class="example">
+            <thead><tr><th>Measure</th><th>ความหมาย</th></tr></thead>
+            <tbody>
+                <tr><td>Mean</td><td>ค่าเฉลี่ย</td></tr>
+                <tr><td>Standard Error</td><td>ประมาณค่าความคลาดเคลื่อนของค่าเฉลี่ย</td></tr>
+                <tr><td>Median</td><td>ค่ากลาง</td></tr>
+                <tr><td>Mode</td><td>ค่าที่เกิดบ่อยที่สุด</td></tr>
+                <tr><td>Standard Deviation</td><td>การกระจายของข้อมูล (ความแปรปรวน)</td></tr>
+                <tr><td>Sample Variance</td><td>ความแปรปรวนตัวอย่าง</td></tr>
+                <tr><td>Kurtosis / Skewness</td><td>รูปร่างการแจกแจง (หาง/เอียง)</td></tr>
+                <tr><td>Range / Min / Max</td><td>ค่าสูงสุด ต่ำสุด และช่วง</td></tr>
+                <tr><td>Count / Sum</td><td>จำนวนตัวอย่าง และผลรวม</td></tr>
+            </tbody>
+        </table>
+
+        <h2>6) ตัวอย่างใช้งานจริง</h2>
+        <ol>
+            <li>สมมติคุณมีคอลัมน์ `alcohol` และ `quality` ใน `wine_input.xlsx`</li>
+            <li>เลือกช่วง <code>A1:L51</code> (รวมหัวคอลัมน์) แล้วรัน Descriptive Statistics</li>
+            <li>ดูค่า Mean, Std Dev ของ `alcohol` เพื่อประเมินสเกลและการกระจาย; หาก Std Dev สูง แปลว่าค่า alcohol กระจายกว้าง</li>
+            <li>ดู Skewness เพื่อเช็คว่า distribution เอียงหรือไม่ — ถ้า skew มาก อาจต้องพิจารณาแปลงข้อมูลก่อนวิเคราะห์ต่อ</li>
+        </ol>
+
+        <h2>7) เคล็ดลับและข้อควรระวัง</h2>
+        <ul>
+            <li>ลบหรือจัดการค่าที่หายไปก่อนรัน (ToolPak จะคำนวณจากข้อมูลที่อยู่ในช่วงเท่านั้น)</li>
+            <li>หากต้องการสรุปเฉพาะบางคอลัมน์ ให้เลือกช่วงที่ประกอบด้วยคอลัมน์ที่ต้องการเท่านั้น</li>
+            <li>ค่าบางตัวเช่น Mode อาจไม่เหมาะสมกับข้อมูลต่อเนื่อง (continuous)
+            </li>
+            <li>หากต้องการการวิเคราะห์เชิงลึก (p-value, CI) ให้ใช้สคริปต์ Python หรือ Add-in เสริม</li>
+        </ul>
+
+        <h2>8) ถัดไป</h2>
+        <p>หากต้องการ ผม/เรา สามารถเพิ่ม:</p>
+        <ul>
+            <li>ไฟล์ตัวอย่าง `uploads/wine_sample.xlsx` พร้อมข้อมูลตัวอย่างสั้น ๆ</li>
+            <li>สคริปต์ Python ใน `scripts/` เพื่อคำนวณ descriptive stats พร้อม p-values และ export เป็น Excel/CSV</li>
+            <li>visualization เบื้องต้น (histogram, boxplot) ด้วย Matplotlib/Seaborn</li>
+        </ul>
+
+        <p>บอกผมว่าต้องการอย่างไหน แล้วผมจะเพิ่มให้เรียบร้อย</p>
+    </div>
 </body>
 </html>

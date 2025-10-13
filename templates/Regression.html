@@ -1,11 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Upload Wine Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>คู่มือ: Regression (การถดถอยเชิงเส้น) ด้วย Excel Analysis ToolPak</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Regression</h1>
-    
+    <div class="container">
+            <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+                <h1 style="margin:0">คู่มือการใช้ Excel Analysis ToolPak: Regression</h1>
+                <a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a>
+            </div>
+    <p class="tutorial-subtitle">คำอธิบายภาษาไทยสำหรับการใช้ฟีเจอร์ <strong>Regression</strong> (การถดถอยเชิงเส้น) ใน Excel Analysis ToolPak เพื่อสร้างแบบจำลองเชิงเส้นเดี่ยวหรือเชิงเส้นพหุคูณ โดยใช้ไฟล์ที่ได้จากแอป (`uploads/wine_input.xlsx`).</p>
+
+        <h2>1) เมื่อใช้ Regression</h2>
+        <ul>
+            <li>ใช้เมื่อต้องการสร้างสัมพันธ์เชิงเส้นระหว่างตัวแปรตาม (Y) และตัวแปรอิสระ (X1, X2,...)</li>
+            <li>Excel ให้ค่า coefficients, R-squared, p-values, standard errors, residuals และอื่น ๆ</li>
+        </ul>
+
+        <h2>2) เตรียมข้อมูล</h2>
+        <ol>
+            <li>ดาวน์โหลด `wine_input.xlsx` จากหน้า index ของแอป</li>
+            <li>เลือกคอลัมน์ที่ต้องการ: ตัวอย่าง: ถ้าต้องการทำนาย `quality` (Y) โดยใช้ `alcohol` และ `sulphates` เป็นตัวแปรอิสระ (X)</li>
+            <li>แน่ใจว่าช่วงข้อมูลไม่มีข้อความและหัวคอลัมน์อยู่บนแถวแรก</li>
+        </ol>
+
+        <h2>3) เปิดใช้งาน Data Analysis &gt; Regression</h2>
+        <ol>
+            <li>ไปที่ <strong>Data</strong> &gt; <strong>Data Analysis</strong></li>
+            <li>เลือก <strong>Regression</strong> แล้วคลิก <strong>OK</strong></li>
+        </ol>
+
+        <h2>4) ตั้งค่าต่าง ๆ ในหน้าต่าง Regression</h2>
+        <ul>
+            <li><strong>Input Y Range:</strong> ช่วงของตัวแปรตาม (เช่น `L1:L51` ถ้า `quality` อยู่ในคอลัมน์ L)</li>
+            <li><strong>Input X Range:</strong> ช่วงของตัวแปรอิสระ (เช่น `E1:F51` ถ้า `alcohol` และ `sulphates` อยู่ในคอลัมน์ E-F)</li>
+            <li><strong>Labels:</strong> ติ๊กถ้ารวมชื่อคอลัมน์ในช่วง</li>
+            <li><strong>Output Range:</strong> ระบุตำแหน่งผลลัพธ์หรือเลือก New Worksheet/Workbook</li>
+            <li>เลือกตัวเลือกเสริมตามต้องการ เช่น <em>Residuals</em>, <em>Standardized Residuals</em>, <em>Residual Plots</em>, <em>Line Fit Plots</em>, <em>Confidence Levels</em> เป็นต้น</li>
+            <li>ถ้าต้องการ p-values และ statistics ที่สมบูรณ์ ให้ติ๊ก <strong>Labels</strong> และเว้นค่า Confidence default (95%) ได้ตามต้องการ</li>
+        </ul>
+
+        <h2 class="section-heading">5) อ่านผลลัพธ์สำคัญ</h2>
+        <table class="example-table">
+            <thead><tr><th>ค่าผลลัพธ์</th><th>อธิบาย</th></tr></thead>
+            <tbody>
+                <tr><td>Multiple R</td><td>ค่าสหสัมพันธ์ระหว่าง Y ที่คาดการณ์และ Y ที่สังเกต</td></tr>
+                <tr><td>R Square</td><td>สัดส่วนความแปรปรวนของ Y ที่อธิบายได้โดย X (0-1)</td></tr>
+                <tr><td>Adjusted R Square</td><td>R^2 ที่ปรับแล้วสำหรับจำนวนตัวแปร — ใช้เปรียบเทียบโมเดล</td></tr>
+                <tr><td>Standard Error</td><td>ขนาดของข้อผิดพลาดมาตรฐานของการทำนาย</td></tr>
+                <tr><td>Observations</td><td>จำนวนแถวข้อมูลที่ใช้</td></tr>
+            </tbody>
+        </table>
+
+        <h2>6) ตาราง Coefficients</h2>
+        <p>ตารางนี้แสดงค่า coefficient สำหรับ Intercept และแต่ละตัวแปร X พร้อม <em>Standard Error</em>, <em>t Stat</em>, และ <em>p-value</em>. ตัวอย่างการอ่าน:</p>
+        <ul>
+            <li>Coefficient ของ `alcohol` = 0.2 หมายความว่า ทุก ๆ หน่วยเพิ่มของ `alcohol` คาดการณ์ให้ `quality` เพิ่ม 0.2 หน่วย (เมื่อค่าตัวแปรอื่นคงที่)</li>
+            <li>p-value น้อยกว่า 0.05 บ่งชี้ว่าค่าดังกล่าวมีนัยสำคัญทางสถิติ (สมมติระดับ 5%)</li>
+        </ul>
+
+        <h2>7) ตัวอย่างจริง (ใช้ `wine_input.xlsx`)</h2>
+        <ol>
+            <li>สมมติ `quality` อยู่ที่คอลัมน์ L, `alcohol` ที่คอลัมน์ K, และ `sulphates` ที่คอลัมน์ J</li>
+            <li>ในหน้าต่าง Regression: Input Y Range = <code>L1:L51</code>, Input X Range = <code>J1:K51</code>, ติ๊ก Labels, Output Range = new worksheet</li>
+            <li>ตรวจสอบ R Square — ค่าที่สูงหมายถึงโมเดลอธิบายความแปรปรวนได้มาก</li>
+            <li>ดูตาราง Coefficients และดู p-values: ถ้าตัวแปรมี p-value > 0.05 อาจไม่ควรถือว่าเป็นตัวทำนายที่สำคัญ</li>
+            <li>ดู Residuals และ Residual Plots เพื่อตรวจสอบสมมติฐานของการถดถอย (เช่น ความเป็นเส้นตรง homoscedasticity, ความเป็นปกติของ resíduos)</li>
+        </ol>
+
+        <h2>8) ข้อควรระวัง</h2>
+        <ul>
+            <li>การถดถอยเชิงเส้นต้องการสมมติฐานหลายประการ (linearity, independence, homoscedasticity, normality of residuals)</li>
+            <li>multicollinearity: ถ้า X บางตัวมี correlation สูงกัน อาจทำให้ coefficients ไม่เสถียร — พิจารณาตรวจสอบ VIF หรือดู correlation matrix ก่อน</li>
+            <li>outliers อาจมีผลกระทบใหญ่ — ตรวจสอบ residuals และ leverage points</li>
+            <li>Excel ToolPak เหมาะสำหรับวิเคราะห์แบบเบื้องต้น หากต้องการการวิเคราะห์ขั้นสูงหรือ cross-validation ใช้ Python (statsmodels / scikit-learn)</li>
+        </ul>
+
+        <h2>9) ถัดไป (ข้อเสนอเพิ่มเติม)</h2>
+        <p>ผม/เรา สามารถเพิ่มสคริปต์ Python ตัวเล็ก ๆ ใน `scripts/` สำหรับ:</p>
+        <ul>
+            <li>fit model ด้วย statsmodels และคืนค่า summary (coef, p-values, conf intervals)</li>
+            <li>plot residual diagnostics (QQ-plot, residuals vs fitted)</li>
+            <li>คำนวณ VIF เพื่อตรวจ multicollinearity</li>
+        </ul>
+
+        <p>อยากให้ผมเพิ่มตัวอย่าง `uploads/wine_sample.xlsx` หรือสคริปต์ Python ใด ๆ ไหมครับ?</p>
+    </div>
 </body>
 </html>
