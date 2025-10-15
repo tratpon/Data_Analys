@@ -15,7 +15,6 @@
             {% for col in columns %}
               <th>{{ col }}</th>
             {% endfor %}
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -23,14 +22,15 @@
             {% for col in columns %}
               <td><input type="text" name="{{ col }}" placeholder="{{ col }}"></td>
             {% endfor %}
-            <td><button type="button" class="remove-btn" onclick="removeRow(this)">Remove</button></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button type="button" class="add-btn" onclick="addRow()">Add Row</button>
-    <input type="text" id="filename" name="filename" placeholder="ชื่อไฟล์ (ไม่ต้องใส่ .xlsx)">
-    <button type="submit" class="submit-btn">ดาวน์โหลด Excel</button>
+  <button type="button" class="add-btn" onclick="addRow()">Add Row</button>
+  <button type="button" class="remove-btn" onclick="removeSelected()">Delete Row</button>
+  <button type="button" class="random-btn" onclick="fillSampleRow()">random value</button>
+  <input type="text" id="filename" name="filename" placeholder="ชื่อไฟล์ (ไม่ต้องใส่ .xlsx)">
+  <button type="submit" class="submit-btn">ดาวน์โหลด Excel</button>
   </form>
 
   <div class="tutorials">
@@ -39,9 +39,24 @@
     <a href="{{ url_for('Regression') }}"><button>Tutorial Regression</button></a>
     <a href="{{ url_for('powerbi_avg') }}"><button>Powerbi-Avg</button></a>
   </div>
-
+  
+  <script id="jsColumnsData" type="application/json">{{ columns|tojson }}</script>
   <script>
-    const jsColumns = {{ columns|tojson | safe }};
+    const jsColumns = JSON.parse(document.getElementById('jsColumnsData').textContent || '[]');
+
+    function attachRowEvents(row){
+      row.addEventListener('click', function(e){
+        if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'input') return;
+        this.classList.toggle('selected');
+      });
+    }
+
+    (function initRows(){
+      const tbody = document.getElementById('data-table').tBodies[0];
+      for (let i=0; i<tbody.rows.length; i++){
+        attachRowEvents(tbody.rows[i]);
+      }
+    })();
 
     function addRow(){
       const tableBody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
@@ -54,18 +69,97 @@
         input.placeholder = jsColumns[i];
         cell.appendChild(input);
       }
-      const cellAction = row.insertCell();
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.innerText = 'Remove';
-      btn.className = 'remove-btn';
-      btn.onclick = function(){ removeRow(btn); };
-      cellAction.appendChild(btn);
+      attachRowEvents(row);
     }
 
-    function removeRow(btn){
-      const row = btn.parentNode.parentNode;
-      row.parentNode.removeChild(row);
+    function removeSelected(){
+      const tbody = document.getElementById('data-table').tBodies[0];
+      const rows = Array.from(tbody.querySelectorAll('tr.selected'));
+      if(rows.length === 0){ alert('ไม่มีแถวที่เลือก'); return; }
+      rows.forEach(r => r.parentNode.removeChild(r));
+    }
+    function clearTable(){
+      const tbody = document.getElementById('data-table').tBodies[0];
+      tbody.innerHTML = '';
+      addRow();
+    }
+
+    let lastFilledRowIndex = -1; 
+
+    function fillSampleRow() {
+      const tbody = document.getElementById('data-table').tBodies[0];
+      let targetRow;
+
+      if (tbody.rows.length === 0) {
+        addRow();
+      }
+      if (lastFilledRowIndex < 0) {
+        targetRow = tbody.rows[0];
+        lastFilledRowIndex = 0;
+      } else {
+        if (lastFilledRowIndex + 1 < tbody.rows.length) {
+          targetRow = tbody.rows[lastFilledRowIndex + 1];
+          lastFilledRowIndex++;
+        } else {
+          addRow();
+          targetRow = tbody.rows[tbody.rows.length - 1];
+          lastFilledRowIndex = tbody.rows.length - 1;
+        }
+      }
+
+      for (let i = 0; i < jsColumns.length; i++) {
+        const input = targetRow.cells[i].querySelector('input');
+        if (!input) continue;
+        const colName = jsColumns[i];
+        input.value = randomValueForColumn(colName);
+      }
+    }
+   
+    function randBetween(min, max, decimals=2){
+      const p = Math.pow(10, decimals);
+      return Math.round((Math.random()*(max-min) + min) * p) / p;
+    }
+
+    function randomValueForColumn(col){
+      const name = (col||'').toLowerCase();
+      if (name.includes('fixed acidity')) return randBetween(4.0, 15.0, 2);
+      if (name.includes('volatile acidity')) return randBetween(0.08, 1.5, 3);
+      if (name.includes('citric acid')) return randBetween(0.0, 1.0, 3);
+      if (name.includes('residual sugar')) return randBetween(0.4, 15.0, 2);
+      if (name.includes('chlorides')) return randBetween(0.01, 0.20, 3);
+      if (name.includes('free sulfur dioxide')) return Math.round(randBetween(1, 50, 0));
+      if (name.includes('total sulfur dioxide')) return Math.round(randBetween(10, 200, 0));
+      if (name.includes('density')) return randBetween(0.9900, 1.0050, 4);
+      if (name === 'ph' || name.includes('pH'.toLowerCase())) return randBetween(2.8, 4.0, 2);
+      if (name.includes('sulphates')) return randBetween(0.2, 1.5, 2);
+      if (name.includes('alcohol')) return randBetween(8.0, 15.0, 2);
+      if (name.includes('quality')) return Math.round(randBetween(3, 9, 0));
+      return randBetween(0.0, 5.0, 2);
+    }
+
+    function toggleStriping(){
+      const tbody = document.getElementById('data-table').tBodies[0];
+      tbody.classList.toggle('no-striping');
+    }
+
+    function countRows(){
+      const tbody = document.getElementById('data-table').tBodies[0];
+      return tbody.rows.length;
+    }
+
+    function exportPreview(){
+      const tbody = document.getElementById('data-table').tBodies[0];
+      let csv = '';
+      for (let r=0; r<tbody.rows.length; r++){
+        const vals = [];
+        for (let c=0; c<jsColumns.length; c++){
+          const input = tbody.rows[r].cells[c].querySelector('input');
+          vals.push(input ? input.value : '');
+        }
+        csv += vals.join(',') + '\n';
+      }
+      const w = window.open('about:blank','preview');
+      w.document.write('<pre>'+csv.replace(/</g,'&lt;')+'</pre>');
     }
   </script>
 </body>

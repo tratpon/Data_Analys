@@ -11,16 +11,16 @@ body {
     background: #ffffff; 
     padding: 24px; 
     border-radius: 12px; 
-    max-width: 1200px; 
+    max-width: 1100px; 
     margin: 20px auto; 
     box-shadow: 0 8px 20px rgba(0,0,0,0.06);
 }
 
 h1 { 
-    text-align: center; 
+    text-align: left; 
     color: #0f172a; 
     margin-bottom: 12px; 
-    font-size: 30px;
+    font-size: 26px;
 }
 
 .page-header { display:flex; gap:12px; align-items:center; justify-content:space-between; }
@@ -92,7 +92,7 @@ button {
 .remove-btn { 
     background-color: transparent;
     color: #b45309; 
-    border: 2px solid #f59e0b; 
+    border: 2px solid #f59e0b;
     padding: 6px 10px;
 }
 
@@ -117,10 +117,6 @@ button {
 
 .submit-btn:hover { 
     background-color: #2563eb; 
-}
-
-.random-btn:hover { 
-    background-color: rgb(175, 175, 175); 
 }
 
 .table-wrapper { 
@@ -170,7 +166,6 @@ button {
 .tutorials button:hover { 
     background-color:#eab308; 
 }
-
 
 .tutorial-subtitle { 
     font-size: 15px; 

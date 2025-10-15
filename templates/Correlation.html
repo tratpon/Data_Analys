@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>คู่มือ: การหาค่าสหสัมพันธ์ (Correlation) ด้วย Excel Analysis ToolPak</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='tutorial.css') }}">
 </head>
 <body>
     <div class="container">
-                <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+                <div class="page-header" style="margin-bottom:12px;">
                     <h1 style="margin:0">คู่มือการใช้ Excel Analysis ToolPak: Correlation</h1>
-                    <a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a>
+                    <div><a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a></div>
                 </div>
     <p class="tutorial-subtitle">หน้านี้อธิบายเป็นภาษาไทยทีละขั้นตอนว่าจะใช้ฟีเจอร์ <strong>Correlation</strong> ใน <em>Excel Analysis ToolPak</em> เพื่อวิเคราะห์ความสัมพันธ์ระหว่างตัวแปร (เช่น ตัวแปรทางเคมีของไวน์) โดยใช้ไฟล์ที่ได้จากปุ่มดาวน์โหลดของแอป (`uploads/wine_input.xlsx`).</p>
 
@@ -75,16 +75,6 @@
             <li>จำนวนตัวอย่างน้อย ๆ อาจทำให้ค่าไม่เสถียร — ควรมีตัวอย่างมากพอ (เช่น > 30 แถว โดยประมาณ)</li>
             <li>ถ้าต้องการทดสอบนัยสำคัญทางสถิติ (p-value) ให้ใช้ add-in หรือฟังก์ชันอื่น ๆ — ToolPak correlation ไม่แสดง p-values โดยตรง</li>
         </ul>
-
-    <h2 class="section-heading">8) ถัดไป</h2>
-        <p>หลังจากได้ matrix แล้ว คุณอาจจะ:</p>
-        <ul>
-            <li>ใช้ conditional formatting ใน Excel เพื่อเน้นค่าเชิงสูง/ต่ำ</li>
-            <li>ส่งออก matrix เป็นภาพหรือคัดลอกไปยังรายงาน</li>
-            <li>นำ matrix ไปเป็น input ในการทำ feature selection หรือตรวจสอบ multicollinearity ก่อนทำ regression</li>
-        </ul>
-
-        <p>ถ้าต้องการ ผม/เรา (ทีม) สามารถเพิ่มตัวอย่างไฟล์ตัวอย่างใน `uploads/` หรือเพิ่มสคริปต์ Python เพื่อคำนวณ correlation พร้อม p-values และ visualization — บอกผมว่าต้องการแบบไหน</p>
     </div>
 </body>
 </html>

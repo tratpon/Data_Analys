@@ -27,8 +27,18 @@ def index():
         df = pd.DataFrame(data)
         for col in COLUMNS:
             df[col] = pd.to_numeric(df[col], errors='ignore')
+            
+            col_order_raw = request.form.get('column_order', '')
+        if col_order_raw:
+            try:
+                import json
+                requested = json.loads(col_order_raw)
+                requested = [c for c in requested if c in df.columns]
+                remaining = [c for c in df.columns if c not in requested]
+                df = df[ requested + remaining ]
+            except Exception:
+                pass
 
-        # รับชื่อไฟล์จากผู้ใช้
         filename = request.form.get("filename", "wine_input")
         out_path = os.path.join(UPLOAD_FOLDER, f"{filename}.xlsx")
 

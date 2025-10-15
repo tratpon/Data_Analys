@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>คู่มือ: Regression (การถดถอยเชิงเส้น) ด้วย Excel Analysis ToolPak</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='tutorial.css') }}">
 </head>
 <body>
     <div class="container">
-            <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+            <div class="page-header" style="margin-bottom:12px;">
                 <h1 style="margin:0">คู่มือการใช้ Excel Analysis ToolPak: Regression</h1>
-                <a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a>
+                <div><a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a></div>
             </div>
-    <p class="tutorial-subtitle">คำอธิบายภาษาไทยสำหรับการใช้ฟีเจอร์ <strong>Regression</strong> (การถดถอยเชิงเส้น) ใน Excel Analysis ToolPak เพื่อสร้างแบบจำลองเชิงเส้นเดี่ยวหรือเชิงเส้นพหุคูณ โดยใช้ไฟล์ที่ได้จากแอป (`uploads/wine_input.xlsx`).</p>
+    <p class="tutorial-subtitle">หน้านี้อธิบายเป็นภาษาไทยขั้นตอนการใช้ฟีเจอร์ <strong>Regression</strong> (การถดถอยเชิงเส้น) ใน Excel Analysis ToolPak เพื่อสร้างแบบจำลองเชิงเส้นเดี่ยวหรือเชิงเส้นพหุคูณ โดยใช้ไฟล์ที่ได้จากแอป (`uploads/wine_input.xlsx`).</p>
 
         <h2>1) เมื่อใช้ Regression</h2>
         <ul>
@@ -78,16 +78,6 @@
             <li>outliers อาจมีผลกระทบใหญ่ — ตรวจสอบ residuals และ leverage points</li>
             <li>Excel ToolPak เหมาะสำหรับวิเคราะห์แบบเบื้องต้น หากต้องการการวิเคราะห์ขั้นสูงหรือ cross-validation ใช้ Python (statsmodels / scikit-learn)</li>
         </ul>
-
-        <h2>9) ถัดไป (ข้อเสนอเพิ่มเติม)</h2>
-        <p>ผม/เรา สามารถเพิ่มสคริปต์ Python ตัวเล็ก ๆ ใน `scripts/` สำหรับ:</p>
-        <ul>
-            <li>fit model ด้วย statsmodels และคืนค่า summary (coef, p-values, conf intervals)</li>
-            <li>plot residual diagnostics (QQ-plot, residuals vs fitted)</li>
-            <li>คำนวณ VIF เพื่อตรวจ multicollinearity</li>
-        </ul>
-
-        <p>อยากให้ผมเพิ่มตัวอย่าง `uploads/wine_sample.xlsx` หรือสคริปต์ Python ใด ๆ ไหมครับ?</p>
     </div>
 </body>
 </html>

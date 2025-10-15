@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>คู่มือ: Descriptive Statistics ด้วย Excel Analysis ToolPak</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='tutorial.css') }}">
 </head>
 <body>
     <div class="container">
-            <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+            <div class="page-header" style="margin-bottom:12px;">
                 <h1 style="margin:0">คู่มือการใช้ Excel Analysis ToolPak: Descriptive Statistics</h1>
-                <a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a>
+                <div><a href="{{ url_for('index') }}"><button type="button">กลับหน้าหลัก</button></a></div>
             </div>
     <p class="tutorial-subtitle">หน้านี้อธิบายเป็นภาษาไทยขั้นตอนการใช้ฟีเจอร์ <strong>Descriptive Statistics</strong> ใน <em>Excel Analysis ToolPak</em> เพื่อสรุปสถิติพื้นฐาน (เช่น ค่าเฉลี่ย ส่วนเบี่ยงเบนมาตรฐาน ค่าต่ำสุด-สูงสุด ฯลฯ) โดยใช้ไฟล์ที่ได้จากแอป (`uploads/wine_input.xlsx`).</p>
 
@@ -78,16 +78,6 @@
             </li>
             <li>หากต้องการการวิเคราะห์เชิงลึก (p-value, CI) ให้ใช้สคริปต์ Python หรือ Add-in เสริม</li>
         </ul>
-
-        <h2>8) ถัดไป</h2>
-        <p>หากต้องการ ผม/เรา สามารถเพิ่ม:</p>
-        <ul>
-            <li>ไฟล์ตัวอย่าง `uploads/wine_sample.xlsx` พร้อมข้อมูลตัวอย่างสั้น ๆ</li>
-            <li>สคริปต์ Python ใน `scripts/` เพื่อคำนวณ descriptive stats พร้อม p-values และ export เป็น Excel/CSV</li>
-            <li>visualization เบื้องต้น (histogram, boxplot) ด้วย Matplotlib/Seaborn</li>
-        </ul>
-
-        <p>บอกผมว่าต้องการอย่างไหน แล้วผมจะเพิ่มให้เรียบร้อย</p>
     </div>
 </body>
 </html>
